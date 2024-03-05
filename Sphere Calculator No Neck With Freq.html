@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spherical Resonator Calculator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff;
+      color: #333;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    #calculator {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      padding: 20px; /* Reduced padding */
+      width: 50%;
+      max-width: 250px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px; /* Reduced margin */
+      font-size: 18px; /* Reduced font size */
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px; /* Reduced margin */
+      color: #555;
+      font-size: 14px; /* Reduced font size */
+    }
+
+    input {
+      width: calc(35% - 10px); /* Reduced width by 75% */
+      padding: 8px; /* Reduced padding */
+      margin-bottom: 10px; /* Reduced margin */
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #eee;
+      color: #333;
+      outline: none;
+      font-size: 14px; /* Reduced font size */
+    }
+
+    input::placeholder {
+      color: #999;
+      font-size: 12px; /* Reduced font size */
+    }
+
+    button {
+      background-color: #fff;
+      color: #333;
+      padding: 10px 15px; /* Reduced padding */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px; /* Reduced font size */
+      transition: background-color 0.3s, transform 0.3s;
+      transform-style: preserve-3d;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2); /* Reduced box shadow */
+    }
+
+    button:hover {
+      background-color: #fff;
+      transform: translate(0, -3px); /* Reduced translation */
+    }
+
+    #result {
+      margin-top: 10px; /* Reduced margin */
+      font-size: 24px; /* Reduced font size */
+      color: #555;
+    }
+
+    #copy-button {
+      margin-top: 5px; /* Reduced margin */
+      background-color: #555;
+      color: #fff;
+      padding: 3px 8px; /* Reduced padding */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 10px; /* Reduced font size */
+      transition: background-color 0.3s;
+    }
+
+    #copy-button:hover {
+      background-color: #444;
+    }
+
+    #copy-success {
+      color: #333;
+      font-size: 12px; /* Reduced font size */
+      margin-top: 3px; /* Reduced margin */
+    }
+	#result-label {
+	font-size: 14px;
+	color: #555;
+	}
+  </style>
+</head>
+<body>
+  <div id="calculator">
+    
+    
+    Spherical Resonator Calculator
+	<p></P>
+    <label for="frequency">Frequency (Hz):</label>
+    <input type="number" id="frequency" placeholder="">
+    
+    <label for="holeDiameter">Sound Hole Diameter (mm):</label>
+    <input type="number" id="holeDiameter" placeholder="">
+    <p></P>
+    <button onclick="calculateDiameter()">Calculate</button>
+    <p></P>
+    <p id="result-label">Sphere Diameter (mm):</p>
+    <p id="result"></p>
+    
+    <button id="copy-button" onclick="copyResult()">COPY</button>
+	<p></p>
+    <p id="copy-success"></p>
+	<P></P>
+	<iframe src="scroller.html" style="width: 65%; height: 220px; border: none;"></iframe>
+  </div>
+  <script>
+    function calculateDiameter() {
+      const speedOfSound = 343000; // mm/s
+      const frequency = document.getElementById('frequency').value;
+      const holeDiameter = document.getElementById('holeDiameter').value;
+      const diameter = Math.cbrt((8 * Math.pow(speedOfSound, 2)) / (Math.PI**2 * Math.pow(frequency, 2)));
+      document.getElementById('result').innerText = diameter.toFixed(2);
+      clearCopySuccess();
+    }
+
+    function copyResult() {
+      const result = document.getElementById('result').innerText;
+      navigator.clipboard.writeText(result);
+      document.getElementById('copy-success').innerText = 'Copied to clipboard!';
+      setTimeout(clearCopySuccess, 3000);
+    }
+
+    function clearCopySuccess() {
+      document.getElementById('copy-success').innerText = '';
+    }
+  </script>
+</body>
+</html>
